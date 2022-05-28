@@ -1,5 +1,13 @@
+:root {
+    --bot-color: #ffcccb;
+    --second-color: #faa4a2;
+    --text-color: #ffffff;
+    --clickable-color: #93f0f4;
+    --clickable-color-clicked: #80d2d5;
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -13,6 +21,27 @@ html {
   min-height: 100%;
 }
 
+.navbar-nav .nav-link {
+    color: var(--text-color);
+}
+
+.navbar-brand {
+    color: var(--text-color);
+}
+.navbar-brand:hover {
+    color: var(--text-color);
+}
+
+
+a {
+    color: var(--clickable-color);
+}
+    a:hover {
+        color: var(--clickable-color-clicked);
+    }
+
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--second-color);
+    color: var(--text-color);
 }
