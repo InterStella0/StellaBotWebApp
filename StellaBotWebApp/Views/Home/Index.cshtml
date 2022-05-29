@@ -1,9 +1,9 @@
 ﻿@using Newtonsoft.Json
+@using StellaBotWebApp.Common
 @model HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
     var BotInfo = Model.API.BotInfo;
-    var value = DateTime.UtcNow - BotInfo.UpTime;
 }
 
 <main role="main">
@@ -19,6 +19,11 @@
             <p class="masthead-subheading font-weight-light mb-0">Created By 
                 <img class="masthead-avatar rounded-circle" src="@BotInfo.OwnerAvatar"></> 
                 @BotInfo.OwnerName</p>
+            <div class="divider-custom divider-light"></div>
+            <a class="btn btn-rounded" href="@Model.API.FormUrl("stella_bot", "invite")">
+                <i class="fab fa-discord pr-2" aria-hidden="true" style="margin-right: 10px"></i>
+                Invite to Server
+            </a>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
@@ -29,7 +34,7 @@
                         <div class="round-info-item">
                             <div>
                                 <h1 class="masthead-heading text-uppercase text-white text-center">Guilds</h1>
-                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.GuildAmount:n0}")</h1>
+                                <h1 class="masthead-heading text-white text-center">@StringUtils.ShowValue($"{BotInfo.GuildAmount:n0}")</h1>
                             </div>
                         </div>
                     </div>
@@ -39,7 +44,7 @@
                         <div class="round-info-item">
                             <div>
                                 <h1 class="masthead-heading text-uppercase text-white text-center">Users</h1>
-                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.UserAmount:n0}")</h1>
+                                <h1 class="masthead-heading text-white text-center">@StringUtils.ShowValue($"{BotInfo.UserAmount:n0}")</h1>
                             </div>
                         </div>
                     </div>
@@ -49,7 +54,7 @@
                         <div class="round-info-item">
                             <div>
                                 <h1 class="masthead-heading text-uppercase text-white text-center">Bot Latency</h1>
-                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.Latency * 1000:n2}ms")</h1>
+                                <h1 class="masthead-heading text-white text-center">@(StringUtils.ShowValue($"{BotInfo.Latency * 1000:n2}") + "ms")</h1>
                             </div>
                         </div>
                     </div>
@@ -59,7 +64,16 @@
                         <div class="round-info-item">
                             <div>
                                 <h1 class="masthead-heading text-uppercase text-white text-center">Bot Uptime</h1>
-                                <h1 class="masthead-heading text-white text-center">@($"{StellaAPI.ToHumanReadableString(DateTime.UtcNow - BotInfo.UpTime)}") ago</h1>
+                                <h1 class="masthead-heading text-white text-center">@{
+                                    if (BotInfo.UpTime is not null){
+                                            var date = (DateTime) BotInfo.UpTime;
+                                            @(StellaAPI.ToHumanReadableString(DateTime.UtcNow - date) + " ago")
+                                        }
+                                        else
+                                        {
+                                            @("N/A")
+                                        }
+                                    }</h1>
                             </div>
                         </div>
                     </div>
@@ -69,7 +83,7 @@
                         <div class="round-info-item">
                             <div>
                                 <h1 class="masthead-heading text-uppercase text-white text-center">Line of Codes</h1>
-                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.CodeLines:n0}")</h1>
+                                <h1 class="masthead-heading text-white text-center">@StringUtils.ShowValue($"{BotInfo.CodeLines:n0}")</h1>
                             </div>
                         </div>
                     </div>
