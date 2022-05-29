@@ -7,14 +7,62 @@
 <main role="main">
     <header class="masthead text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <img class="masthead-avatar mb-5 rounded-circle" src="@BotInfo.Avatar", height=250 width=250 alt="..." />
+            <img class="masthead-avatar mb-5 rounded-circle" src="@BotInfo.Avatar" />
             <h1 class="masthead-heading text-uppercase mb-0">@BotInfo.Name</h1>
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <p class="masthead-subheading font-weight-light mb-0">Created By @BotInfo.OwnerName</p>
+            <p class="masthead-subheading font-weight-light mb-0">Created By 
+                <img class="masthead-avatar rounded-circle" src="@BotInfo.OwnerAvatar"></> 
+                @BotInfo.OwnerName</p>
         </div>
     </header>
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
+                                <h1 class="masthead-heading text-uppercase text-white text-center">Guilds</h1>
+                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.GuildAmount:n0}")</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
+                                <h1 class="masthead-heading text-uppercase text-white text-center">Users</h1>
+                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.UserAmount:n0}")</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
+                                <h3 class="masthead-heading text-uppercase text-white text-center">Last Executed</h3>
+                                <h5 class="masthead-heading text-white text-center">@{
+                                        var first = BotInfo.LastCommands.FirstOrDefault();
+                                        if (first is not null)
+                                        {
+                                            @($"Served {first["author"]} for '{first["command"]}'")
+                                        }
+                                        else
+                                        {
+                                            @($"Bot was restarted.")
+                                        }
+                                    }</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>

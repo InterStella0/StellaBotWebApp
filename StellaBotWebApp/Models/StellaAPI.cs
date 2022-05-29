@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace StellaBotWebApp.Models
 {
@@ -10,6 +11,9 @@ namespace StellaBotWebApp.Models
         public string OwnerAvatar { get; set; }
         public string OwnerName { get; set; }
         public string Name { get; set; }
+        public long GuildAmount { get; set; }
+        public long UserAmount { get; set; }
+        public List<Dictionary<string, string>> LastCommands { get; set; }
     }
     public class StellaAPI
     {
@@ -20,25 +24,38 @@ namespace StellaBotWebApp.Models
         {
             return $"{BaseUrl}/{string.Join('/', subs)}";
         }
-        public async Task<Dictionary<string, string>> GetRequestAsync(string path)
+        private static T strToJson<T>(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<T>(jsonString);
+        }
+        public async Task<T> GetRequestAsync<T>(string path)
         {
             var full_path = FormUrl("stella_bot", path);
             var response = await client.GetAsync(full_path);
             response.EnsureSuccessStatusCode();
             var jsonString = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
-
+            return strToJson<T>(jsonString);
+        }
+        public async Task<Dictionary<string, string>> GetRequestJsonAsync(string path)
+        {
+            return await GetRequestAsync<Dictionary<string, string>>(path);
         }
         public async Task Init()
         {
-            var botResult = await GetRequestAsync("name");
-            var ownerResult = await GetRequestAsync("owner_name");
+            var botResult = await GetRequestJsonAsync("name");
+            var ownerResult = await GetRequestJsonAsync("owner_name");
+            var botRealTimeInfo = await GetRequestAsync<Dictionary<string, object>>("info");
+
+            var lastCommands = ((JArray) botRealTimeInfo["last_commands"]).ToObject<List<Dictionary<string, string>>>();
             BotInfo = new APIBotInfo()
             {
                 Avatar = FormUrl("stella_bot", "avatar"),
                 OwnerAvatar = FormUrl("stella_bot", "owner_avatar"),
                 Name = botResult["full"],
-                OwnerName = ownerResult["full"]
+                OwnerName = ownerResult["full"],
+                GuildAmount = (long) botRealTimeInfo["guild_amount"],
+                UserAmount = (long) botRealTimeInfo["user_amount"],
+                LastCommands = lastCommands
             };
         }
 
