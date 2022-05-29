@@ -4,14 +4,22 @@
     --text-color: #ffffff;
     --clickable-color: #93f0f4;
     --clickable-color-clicked: #80d2d5;
+    --brightness: 0.5;
 }
 
 html {
     font-size: 14px;
 }
+#mainNav{
+    background-color: var(--bot-color) !important;
+}
+
+.masthead {
+    background-color: var(--second-color);
+}
 
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -23,14 +31,18 @@ html {
 
 .navbar-nav .nav-link {
     color: var(--text-color);
+    font-weight: 500;
 }
+    .navbar-nav .nav-link:hover {
+        filter: brightness(var(--brightness));
+    }
 
 .navbar-brand {
     color: var(--text-color);
 }
-.navbar-brand:hover {
-    color: var(--text-color);
-}
+    .navbar-brand:hover {
+        filter: brightness(var(--brightness));
+    }
 
 
 a {
@@ -44,4 +56,8 @@ body {
     margin-bottom: 60px;
     background-color: var(--second-color);
     color: var(--text-color);
+}
+
+.rounded-circle {
+    border: thick solid #ffebec;
 }
