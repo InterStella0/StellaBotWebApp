@@ -13,7 +13,10 @@ namespace StellaBotWebApp.Models
         public string Name { get; set; }
         public long GuildAmount { get; set; }
         public long UserAmount { get; set; }
-        public List<Dictionary<string, string>> LastCommands { get; set; }
+        public List<Dictionary<string, object>> LastCommands { get; set; }
+        public double Latency { get; set; }
+        public long CodeLines { get; set; }
+        public DateTime UpTime { get; set; }
     }
     public class StellaAPI
     {
@@ -46,7 +49,7 @@ namespace StellaBotWebApp.Models
             var ownerResult = await GetRequestJsonAsync("owner_name");
             var botRealTimeInfo = await GetRequestAsync<Dictionary<string, object>>("info");
 
-            var lastCommands = ((JArray) botRealTimeInfo["last_commands"]).ToObject<List<Dictionary<string, string>>>();
+            var lastCommands = ((JArray) botRealTimeInfo["last_commands"]).ToObject<List<Dictionary<string, object>>>();
             BotInfo = new APIBotInfo()
             {
                 Avatar = FormUrl("stella_bot", "avatar"),
@@ -55,8 +58,32 @@ namespace StellaBotWebApp.Models
                 OwnerName = ownerResult["full"],
                 GuildAmount = (long) botRealTimeInfo["guild_amount"],
                 UserAmount = (long) botRealTimeInfo["user_amount"],
-                LastCommands = lastCommands
+                LastCommands = lastCommands,
+                Latency = (double) botRealTimeInfo["latency"],
+                CodeLines = (long) botRealTimeInfo["codelines"],
+                UpTime = (DateTime) botRealTimeInfo["launch_time"],
             };
+        }
+        public static string ToHumanReadableString(TimeSpan t)
+        {
+            if (t.TotalSeconds <= 1)
+            {
+                return $@"{t:s\.ff} seconds";
+            }
+            if (t.TotalMinutes <= 1)
+            {
+                return $@"{t:%s} seconds";
+            }
+            if (t.TotalHours <= 1)
+            {
+                return $@"{t:%m} minutes";
+            }
+            if (t.TotalDays <= 1)
+            {
+                return $@"{t:%h} hours";
+            }
+
+            return $@"{t:%d} days";
         }
 
     }

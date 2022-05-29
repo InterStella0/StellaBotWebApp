@@ -41,8 +41,14 @@ html {
     font-weight: 900;
     font-size: large;
 }
+
 .round-info-item > div{
     padding: 2rem 0 2rem 0;
+    margin: 0 1rem 0 1rem;
+}
+
+.portfolio .portfolio-item{
+    cursor: initial !important;
 }
 
 

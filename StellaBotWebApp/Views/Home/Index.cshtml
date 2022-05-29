@@ -1,7 +1,9 @@
-﻿@model HomeViewModel
+﻿@using Newtonsoft.Json
+@model HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
     var BotInfo = Model.API.BotInfo;
+    var value = DateTime.UtcNow - BotInfo.UpTime;
 }
 
 <main role="main">
@@ -46,10 +48,41 @@
                     <div class="portfolio-item mx-auto">
                         <div class="round-info-item">
                             <div>
+                                <h1 class="masthead-heading text-uppercase text-white text-center">Bot Latency</h1>
+                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.Latency * 1000:n2}ms")</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
+                                <h1 class="masthead-heading text-uppercase text-white text-center">Bot Uptime</h1>
+                                <h1 class="masthead-heading text-white text-center">@($"{StellaAPI.ToHumanReadableString(DateTime.UtcNow - BotInfo.UpTime)}") ago</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
+                                <h1 class="masthead-heading text-uppercase text-white text-center">Line of Codes</h1>
+                                <h1 class="masthead-heading text-white text-center">@($"{BotInfo.CodeLines:n0}")</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto">
+                        <div class="round-info-item">
+                            <div>
                                 <h3 class="masthead-heading text-uppercase text-white text-center">Last Executed</h3>
                                 <h5 class="masthead-heading text-white text-center">@{
                                         var first = BotInfo.LastCommands.FirstOrDefault();
-                                        if (first is not null)
+                                        var hasData = first is not null;
+                                        if (hasData)
                                         {
                                             @($"Served {first["author"]} for '{first["command"]}'")
                                         }
@@ -58,6 +91,16 @@
                                             @($"Bot was restarted.")
                                         }
                                     }</h5>
+
+                                <h5 class="masthead-heading text-white text-center">@{
+                                        if (hasData)
+                                        {
+                                           var createdAt = (DateTime) first["created_at"];
+                                            @($"{StellaAPI.ToHumanReadableString(DateTime.Now - createdAt)} ago")
+                                         
+                                        }
+                                    }
+                                </h5>
                             </div>
                         </div>
                     </div>
