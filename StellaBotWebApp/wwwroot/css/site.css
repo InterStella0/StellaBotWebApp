@@ -36,6 +36,16 @@ html {
     border: 3px solid var(--border-color-icon) !important;
 }
 
+.btn {
+    margin: 0.375rem !important;
+    word-wrap: break-word;
+    white-space: normal !important;
+    background-color: var(--clickable-color) !important;
+}
+    .btn:hover {
+        background-color: var(--clickable-color-clicked) !important;
+    }
+
 .round-info-item{
     background-color: var(--second-color);
     font-weight: 900;
