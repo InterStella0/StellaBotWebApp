@@ -15,7 +15,7 @@ namespace StellaBotWebApp.Models
     {
         private static readonly HttpClient client = new HttpClient();
         public APIBotInfo BotInfo { get; set; }
-        const string BaseUrl = "http://interstella.online";
+        const string BaseUrl = "http://api.interstella.online";
         public string FormUrl(params string[] subs)
         {
             return $"{BaseUrl}/{string.Join('/', subs)}";
