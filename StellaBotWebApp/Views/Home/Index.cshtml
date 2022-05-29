@@ -1,8 +1,20 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
+    var BotInfo = Model.API.BotInfo;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main role="main">
+    <header class="masthead text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <img class="masthead-avatar mb-5 rounded-circle" src="@BotInfo.Avatar", height=250 width=250 alt="..." />
+            <h1 class="masthead-heading text-uppercase mb-0">@BotInfo.Name</h1>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <p class="masthead-subheading font-weight-light mb-0">Created By @BotInfo.OwnerName</p>
+        </div>
+    </header>
+</main>

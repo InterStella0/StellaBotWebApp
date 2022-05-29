@@ -13,9 +13,11 @@ namespace StellaBotWebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = new HomeViewModel();
+            await model.API.Init();
+            return View(model);
         }
 
         public IActionResult Privacy()
