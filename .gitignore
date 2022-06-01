@@ -365,3 +365,4 @@ FodyWeavers.xsd
 *.conf
 *.service
 default
+appsettings.Development.json

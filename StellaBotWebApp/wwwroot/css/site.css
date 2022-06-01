@@ -36,6 +36,13 @@ html {
     border: 3px solid var(--border-color-icon) !important;
 }
 
+.nav-link > .masthead-avatar {
+    width: 2rem !important;
+    height: 2rem;
+    border: 3px solid var(--border-color-icon);
+}
+
+
 .btn {
     margin: 0.375rem !important;
     word-wrap: break-word;
@@ -65,6 +72,11 @@ html {
 html {
     position: relative;
     min-height: 100%;
+}
+
+.navbar-nav .dropdown-menu {
+    background-color: var(--bot-color) !important;
+    border: none;
 }
 
 .navbar-nav .nav-link {
